@@ -52,7 +52,7 @@ export const productStore = create<ProductStore>((set) => ({
 }));
 
 export const showCountStore = create<Counter>((set) => ({
-  count: 3,
+  count: 6,
   addCount: (by: number) =>
     set((prev: Counter) => ({ count: prev.count + by })),
 }));

@@ -174,7 +174,7 @@ function App() {
                     Load More
                   </button>
                 </div>
-                <div className="absolute top-10 left-2/4">
+                <div className="fixed top-10 left-2/4">
                 <ToastMessage message={message} handleCloseMessage={handleCloseMessage}/>
                 </div>
                 <CartModal

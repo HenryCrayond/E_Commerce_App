@@ -1,12 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
-import { ProductItems } from "../App";
+import { AllProduct, ProductItems } from "../App";
 
 interface Counter{
     count:number;
     addCount:(by:number)=>void;
 }
 
+interface ProductStore {
+    products:any;
+    addProduct:(item:ProductItems)=>void;
+    deleteProduct:(id:number)=>void;
+    updateProduct:(item:ProductItems,index:number)=>void;
+}
+interface GetProduct{
+    storeProduct:AllProduct; 
+    getFetchData:(item:ProductItems)=>void; 
+}
 interface Product{
     id?:number;
     price?:number;
@@ -21,22 +31,21 @@ interface Product{
     images?:string[]
 }
 
-export const getAllProductStore = create((set)=>({
+export const getAllProductStore = create<GetProduct>((set)=>({
  storeProduct:[],
- storeStatus:'',
- getFetchData:(products:Product,status:string)=>set(()=>({storeProduct:products,storeStatus:status})),
+ getFetchData:(products:Product)=>set(()=>({storeProduct:products})),
 
 }))
 
-export const productStore = create((set)=>({
+export const productStore = create<ProductStore>((set)=>({
     products:[],
-    addProduct:(products:Product)=>set((prev:any)=>({products:[...prev.products,products]})),
-    deleteProduct:(id:number)=>set((prev:any)=>({products:prev.products.filter((pro:ProductItems)=>pro?.id !== id)})),
-    updateProduct:(products:Product,i:number)=>set((prev:any)=>({products:prev.products.filter((val:any)=>val.id===products.id ? prev.products[i]:products)}))
+    addProduct:(products:Product)=>set((prev:ProductStore)=>({products:[...prev.products,products]})),
+    deleteProduct:(id:number)=>set((prev:ProductStore)=>({products:prev.products.filter((pro:ProductItems)=>pro?.id !== id)})),
+    updateProduct:(products:Product,i:number)=>set((prev:ProductStore)=>({products:prev.products.filter((val:AllProduct)=>val.id===products.id ? prev.products[i]:products)}))
 }))
 
 
-export const showCountStore = create((set)=>({
-    count:3,
+export const showCountStore = create<Counter>((set)=>({
+    count:6,
     addCount:(by:number)=>set((prev:Counter)=>({count:prev.count + by}))
 }))  

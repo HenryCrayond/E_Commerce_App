@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import "./App.css";
@@ -25,6 +26,7 @@ export interface ProductItems {
 }
 
 export interface AllProduct {
+  [x: string]: any;
   map?: any;
   id?: number;
   price?: number;
@@ -54,7 +56,7 @@ function App() {
 
   const { products, addProduct, deleteProduct, updateProduct } = productStore();
 
-  const {storeProduct, storeStatus ,getFetchData} = getAllProductStore();
+  const {storeProduct,getFetchData} = getAllProductStore();
 
   const { count, addCount } = showCountStore();
   
@@ -83,13 +85,13 @@ function App() {
     addProduct(item);
   };
 
-  const handleDeleteCart = (id: number|undefined) => {
+  const handleDeleteCart = (id: number) => {
     deleteProduct(id);
   };
 
   useEffect(() => {
     if(data){
-      getFetchData(data?.products ,status)
+      getFetchData(data?.products)
     }
   },[data,status])
   

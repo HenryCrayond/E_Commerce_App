@@ -1,10 +1,10 @@
+import { ProductItems } from "../App";
 import { DolorIcon } from "../assets/dolarIcon";
 import { Ratings } from "../assets/ratings";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ListingCards = (props: any) => {
-  const { products, handleAddCart } = props;
-
+  const { products, handleAddCart, handleRemoveCart, cartProduct } = props;
   return (
     <>
       <div className="mt-6 bg-white rounded overflow-hidden relative shadow-md hover:shadow-xl cursor-pointer">
@@ -34,12 +34,25 @@ const ListingCards = (props: any) => {
             </span>
             <span className="block text-gray-300">{products?.category}</span>
           </div>
-          <div
-            className="mt-2 p-2 bg-lime-600 rounded-lg"
-            onClick={() => handleAddCart(products)}
-          >
-            <span className="text-white text-md font-serif">Add&nbsp;Cart</span>
-          </div>
+          {cartProduct.some((val: ProductItems) => val.id === products.id) ? (
+            <div
+              className="mt-2 p-2 bg-red-500 rounded-lg cursor-pointer"
+              onClick={() => handleRemoveCart(products?.id)}
+            >
+              <span className="text-white text-md font-serif">
+                Remove
+              </span>
+            </div>
+          ) : (
+            <div
+              className="mt-2 p-2 bg-lime-600 rounded-lg cursor-pointer"
+              onClick={() => handleAddCart(products)}
+            >
+              <span className="text-white text-md font-serif">
+                Add&nbsp;Cart
+              </span>
+            </div>
+          )}
         </div>
         <div className="absolute bg-gray-400 text-white rounded-2xl p-1 top-2 left-2 flex">
           <DolorIcon />

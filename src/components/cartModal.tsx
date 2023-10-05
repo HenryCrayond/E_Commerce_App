@@ -76,17 +76,17 @@ const Modal = (props: Modals) => {
                         products?.map((item: AllProduct, i: number) => (
                           <>
                             <div
-                              className="flex justify-between items-center gap-3 mb-4"
+                              className="flex justify-between items-center gap-4 mb-4"
                               key={item?.id}
                             >
                               <div>
                                 <img
-                                  className="w-30 h-20 object-cover"
+                                  className="w-30 h-24 object-cover"
                                   src={`${item?.images && item?.images[0]}`}
                                   alt=""
                                 />
                                 <button
-                                  className="border-lime-300 border-2 rounded px-2 py-0 mt-1 w-full text-md text-lime-500 font-bold cursor-pointer active:bg-lime-500 active:text-white"
+                                  className="border-lime-300 border-2 rounded px-2 py-0 mt-5 w-full text-md text-lime-500 font-bold cursor-pointer active:bg-lime-500 active:text-white"
                                   onClick={() => handleDeleteCart(item?.id)}
                                 >
                                   Delete
@@ -137,30 +137,30 @@ const Modal = (props: Modals) => {
 
                     <div>
                       <ul className="flex justify-between items-center ">
-                        <li className="block text-gray-900 text-md font-serif ">
+                        <li className="block text-gray-400 text-md font-serif ">
                           Price
                         </li>
-                        <li className="block text-gray-400">
+                        <li className="block text-gray-900">
                           {getTotalPrice(products)}
                         </li>
                       </ul>
                       <ul className="flex justify-between items-center ">
-                        <li className="block text-gray-900 text-md font-serif">
+                        <li className="block text-gray-400 text-md font-serif">
                           Discount
                         </li>
-                        <li className="block text-gray-400"> 10% </li>
+                        <li className="block text-gray-900"> 10% </li>
                       </ul>
                       <ul className="flex justify-between items-center">
-                        <li className="block text-gray-900 text-md font-serif">
+                        <li className="block text-gray-400 text-md font-serif">
                           Delivery Charges
                         </li>
-                        <li className="block text-gray-400"> 0.00 </li>
+                        <li className="block text-gray-900"> 0.00 </li>
                       </ul>
                       <ul className="flex justify-between items-center mt-2">
                         <li className="block text-gray-600 text-xl font-serif">
                           Total Amount
                         </li>
-                        <li className="block text-gray-400">
+                        <li className="block text-gray-900">
                           {getTotalAmount(getTotalPrice(products), 10)}{" "}
                         </li>
                       </ul>

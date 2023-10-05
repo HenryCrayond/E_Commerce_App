@@ -9,6 +9,7 @@ import CartModal from "./components/cartModal";
 import ListingCards from "./components/listingCards";
 import Navbar from "./components/navBar";
 import { getAllProductStore, productStore, showCountStore } from "./store/productStore";
+import { ToastMessage } from "./components/tost";
 
 export interface ProductItems {
   id?: number;
@@ -50,9 +51,9 @@ const fetchProducts = async () => {
 
 function App() {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [message, setMessage] = useState<boolean>(false);
 
   const { data, status } = useQuery("users", fetchProducts);
-
 
   const { products, addProduct, deleteProduct, updateProduct } = productStore();
 
@@ -79,13 +80,23 @@ function App() {
   const handleCartToggle = () => {
     setShowModal(!showModal);
   };
+  
+  const handleCloseMessage = () => {
+    setMessage(!message);
+  };
 
   const handleAddCart = (item: ProductItems) => {
+    console.log(item);
+    
     item.cartCount = 1;
     addProduct(item);
+    setMessage(true)
+    setTimeout(()=>{setMessage(false)},1000)
   };
 
   const handleDeleteCart = (id: number) => {
+    console.log(id);
+    
     deleteProduct(id);
   };
 
@@ -97,7 +108,7 @@ function App() {
   
   return (
     <>
-      <div className="grid md:grid-cols-5">
+      <div className="grid md:grid-cols-5 relative">
         <div className="md:col-span-1">
           <Navbar />
         </div>
@@ -126,7 +137,7 @@ function App() {
             </div>
           </div>
           {status === "error" && <p className="text-red-600 text-xl font-serif">Error fetching data</p>}
-          {status === "loading" && <p className="text-lime-600 text-xl font-serif">Your products Fetching...</p>}
+          {status === "loading" && <p className="text-lime-600 text-xl font-serif">Your products ready to Fetching...</p>}
           {status === "success" && (
             <>
               <header>
@@ -144,9 +155,12 @@ function App() {
                 <div className="grid md:grid-cols-2 gap-10 lg:grid-cols-3 gap-10 mb-10">
                   {storeProduct?.slice(0, count)?.map((list: AllProduct) => (
                     <ListingCards
-                      products={list}
-                      handleAddCart={handleAddCart}
-                      key={list?.id}
+                    cartProduct={products}
+                    products={list}
+                    handleRemoveCart={handleDeleteCart}
+                    handleDeleteCart={handleDeleteCart}
+                    handleAddCart={handleAddCart}
+                    key={list?.id}
                     />
                   ))}
                 </div>
@@ -160,6 +174,9 @@ function App() {
                     Load More
                   </button>
                 </div>
+                <div className="absolute top-10 left-2/4">
+                <ToastMessage message={message} handleCloseMessage={handleCloseMessage}/>
+                </div>
                 <CartModal
                   products={products}
                   showModal={showModal}
@@ -169,6 +186,7 @@ function App() {
                   handleLessProduct={handleLessProduct}
                 />
               </div>
+              
             </>
           )}
         </main>

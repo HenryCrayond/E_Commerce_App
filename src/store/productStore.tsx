@@ -46,6 +46,6 @@ export const productStore = create<ProductStore>((set)=>({
 
 
 export const showCountStore = create<Counter>((set)=>({
-    count:6,
+    count:3,
     addCount:(by:number)=>set((prev:Counter)=>({count:prev.count + by}))
 }))  
